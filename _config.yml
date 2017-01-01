@@ -1,0 +1,14 @@
+# Site settings
+title: TheFragebogen
+email: your-email@TheFragebogen.de
+description: "TheFragebogen is a software framework for building questionnaires for the web."
+baseurl: "/"
+url: "/"
+
+safe: true
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+highlighter: rouge
+exclude: [raw]
