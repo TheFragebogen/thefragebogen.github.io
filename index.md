@@ -28,5 +28,5 @@ Overview on features
 For an introduction, see:
 
 * the [getting started](gettingstarted/) section,
-* the [README](https://github.com/TheFragebogen/TheFragebogen/README.md), and
+* the [README](https://github.com/TheFragebogen/TheFragebogen/blob/master/README.md), and
 * the [source Code](https://github.com/TheFragebogen/TheFragebogen/).
