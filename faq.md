@@ -45,4 +45,4 @@ What can I do to support TheFragebogen?
 Use it.  
 Be happy.  
 Share your improvements.  
-If you want to contribute and don't know what to do, just ask.
+If you want to contribute and don't know what to do, just ask [here](https://github.com/TheFragebogen/TheFragebogen/issues).
