@@ -40,7 +40,7 @@ What can I do to support TheFragebogen?
 
 * Use it and develop new use cases.
 * Report and fix bugs / design issue.
-* Implement new features. You can take a look at the missing features on the [issue tracker](https://github.com/TheFragebogen/TheFragebogen/issues)).
+* Implement new features. You can take a look at the missing features on the [issue tracker](https://github.com/TheFragebogen/TheFragebogen/issues).
 
 Use it.  
 Be happy.  
