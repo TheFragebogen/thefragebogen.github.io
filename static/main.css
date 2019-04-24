@@ -79,6 +79,12 @@ a:visited {
   color: #727272;
 }
 
+.site-nav .currentPage,
+.site-nav a:hover
+ {
+    font-weight: bold;
+}
+
 /* Page Content styles */
 .page-content {
   padding: 2em 0;
