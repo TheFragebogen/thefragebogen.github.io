@@ -1,9 +1,10 @@
 /*!
-TheFragebogen
-http://thefragebogen.de
-GIT: https://github.com/TheFragebogen/TheFragebogen/commit/bffef2028758ac67970d8e9afa64f196d7d5a7ed
+thefragebogen
+Version: 1.0.0
+http://www.TheFragebogen.de
+GIT: [object Object]/commit/9b45debc059a5ad211b39ebcd1df51af1dde83e7
 License: MIT
-Sunday, December 3rd, 2017, 9:17:21 AM UTC
+Wednesday, April 24th, 2019, 10:30:30 AM UTC
 */
 /**
 Triggers a download of `data` using the provided filename.
@@ -30,7 +31,7 @@ function downloadData(filename, data) {
         downloadLink.click();
         window.URL.revokeObjectURL(downloadLink.href); //Release object: https://developer.mozilla.org/en-US/docs/Web/API/URL.revokeObjectURL
         return;
-    };
+    }
     window.location.href = "data:application/x-download;charset=utf-8," + encodeURIComponent(data);
 }
 
@@ -42,7 +43,7 @@ The messages _should_ be subdivided in five types according to their relevance:
 3. Warn
 4. Info
 5. Debug
- 
+
 DEVELOPER: This class is used internally by LogConsole and should not be accessed directly.
 
 @class LogMessage
@@ -64,7 +65,7 @@ DEVELOPER: All the messages (instances of class `LogMessage`) are saved in an ar
 @class LogConsole
 */
 function LogConsole() {
-    this.logMessages = new Array();
+    this.logMessages = [];
     this.debug("LogConsole.constructor()", "Start");
 }
 
@@ -332,7 +333,7 @@ function ScreenController() {
 
     var localArguments = [].concat.apply([], arguments); //Flatten the potential array.
     for (var i in localArguments) {
-        if (!(localArguments[i] instanceof Screen)) TheFragebogen.logger.error(this.constructor.name + "():", "This argument (index " + i + " is not a Screen: " + localArguments[i] + " and will be ignored.");
+        if (!(localArguments[i] instanceof Screen)) TheFragebogen.logger.error(this.constructor.name + "()", "This argument (index " + i + " is not a Screen: " + localArguments[i] + " and will be ignored.");
     }
     this.screen = localArguments.filter(function(element) {
         return element instanceof Screen;
@@ -376,7 +377,7 @@ ScreenController.prototype.init = function(parentNode) {
     this.currentScreenIndex = 0;
 };
 ScreenController.prototype.setCallbackScreenFinished = function(callback) {
-    if (!callback instanceof Function) {
+    if (!(callback instanceof Function)) {
         TheFragebogen.logger.warn(this.constructor.name + ".setCallbackScreenFinished()", "Callback is not a function. Ignoring it.");
         return;
     }
@@ -389,7 +390,7 @@ Add an additional screen at the end.Appends a screen and returns the index.
 @returns {number} The index of the just added screen; in case of failure -1.
 */
 ScreenController.prototype.addScreen = function(screen) {
-    if (!screen instanceof Screen) {
+    if (!(screen instanceof Screen)) {
         TheFragebogen.logger.warn(this.constructor.name + ".addScreen()", "This screen is not a screen. Ignoring it.");
         return -1;
     }
@@ -527,7 +528,7 @@ ScreenController.prototype.requestDataArray = function() {
     }
 
     var result = [];
-    for (var i in screenIndeces) {
+    for (i in screenIndeces) {
         result[i] = [];
         result[i][0] = screenIndeces[i];
         result[i][1] = questionType[i];
@@ -540,7 +541,7 @@ ScreenController.prototype.requestDataArray = function() {
     result = result.map(function(line) {
         return line.map(function(cell) {
             return (typeof(cell) === "string") ? cell.replace(/\n/g, '\\n') : cell;
-        })
+        });
     });
     return result;
 };
@@ -548,7 +549,7 @@ ScreenController.prototype.requestDataArray = function() {
 @return {boolean}
 */
 ScreenController.prototype.isLastScreen = function() {
-    return !(this.currentScreenIndex < this.screen.length - 1);
+    return this.currentScreenIndex === this.screen.length - 1;
 };
 /*
 @return {number}
@@ -570,6 +571,11 @@ Go to screen by screenId (relative).
 ScreenController.prototype.goToScreenRelative = function(relativeScreenId) {
     if (this.screenContainerNode === null) {
         TheFragebogen.logger.error(this.constructor.name + ".goToScreenRelative()", "Please call init() before.");
+        return false;
+    }
+
+    if (this.getCurrentScreenIndex() == this.screen.length - 1 && relativeScreenId == 1) {
+        TheFragebogen.logger.warn(this.constructor.name + ".goToScreenRelative()", "Reached the last screen and there is no next screen to proceed to.");
         return false;
     }
 
@@ -600,8 +606,8 @@ Initiates preloading of external media, i.e., informs all `Screens` to start loa
 While preloading, `screenController.start()` can be called.
 
 @see ScreenController._onPreloadedScreenFinished()
-@see _onScreenPreloaded()
-@see ._finishedPreload()
+@see ScreenController._onScreenPreloaded()
+@see ScreenController._finishedPreload()
 
 @param innerHTML The HTML to be shown while preloading.
 */
@@ -1003,7 +1009,7 @@ ScreenIFrame.prototype.createUI = function() {
     this.node.onload = function(event) {
         this.urlChanges += 1;
 
-        TheFragebogen.logger.debug(this.constructor.name + ".iframe.onload():", this.urlStartChanges + " of " + this.maxUrlChanges + " viewed.");
+        TheFragebogen.logger.debug(this.constructor.name + ".iframe.onload()", this.urlStartChanges + " of " + this.maxUrlChanges + " viewed.");
 
         if (this.urlChanges >= this.urlChangesToReady) {
             this.duration = Date.now() - this.startTime;
@@ -1054,7 +1060,7 @@ Default paginator is `PaginateUIButton`.
 @class ScreenUIElements
 @augments Screen
 
-@param {string} [className] CSS class
+@param {string} [className=] CSS class
 @param {array} arguments an array containing the UIElements of the screen
 */
 function ScreenUIElements(className) {
@@ -1062,7 +1068,7 @@ function ScreenUIElements(className) {
 
     var localArguments = Array.prototype.slice.call(arguments);
 
-    if (typeof(className) !== "string" || typeof(className) === "undefined" || className === null) {
+    if (typeof(className) !== "string" || className === undefined || className === null) {
         this.className = "";
     } else {
         this.className = className;
@@ -1071,7 +1077,7 @@ function ScreenUIElements(className) {
 
     for (var i in localArguments) {
         if (!(localArguments[i] instanceof UIElement)) {
-            TheFragebogen.logger.error(this.constructor.name + "():", "This argument (index " + i + " is not an UIElement: " + localArguments[i]);
+            TheFragebogen.logger.error(this.constructor.name + "()", "This argument (index " + i + " is not an UIElement: " + localArguments[i]);
         }
     }
     this.uiElements = localArguments.filter(function(element) {
@@ -1079,7 +1085,7 @@ function ScreenUIElements(className) {
     });
 
     if (this.uiElements.length < 1) {
-        TheFragebogen.logger.error(this.constructor.name + "():", "No UIElements were passed to constructor.");
+        TheFragebogen.logger.error(this.constructor.name + "()", "No UIElements were passed to constructor.");
     }
 
     this.paginateUI = new PaginateUIButton(undefined, undefined, 1);
@@ -1102,7 +1108,7 @@ ScreenUIElements.prototype.createUI = function() {
 
     for (var index in this.uiElements) {
         if (this.uiElements[index].createUI === undefined) {
-            TheFragebogen.logger.warn(this.constructor.name + ".createUI():", "Element[" + index + "] has no 'createUI' method");
+            TheFragebogen.logger.warn(this.constructor.name + ".createUI()", "Element[" + index + "] has no 'createUI' method");
             continue;
         }
 
@@ -1121,7 +1127,7 @@ ScreenUIElements.prototype.createUI = function() {
 };
 
 ScreenUIElements.prototype.releaseUI = function() {
-    TheFragebogen.logger.info(this.constructor.name + ".release():", "");
+    TheFragebogen.logger.info(this.constructor.name + ".release()", "");
     this.node = null;
     for (var index in this.uiElements) {
         this.uiElements[index].releaseUI();
@@ -1164,7 +1170,12 @@ ScreenUIElements.prototype.isReady = function() {
  @returns {array}
  */
 ScreenUIElements.prototype.getDataCSV = function() {
-    var data = [new Array(), new Array(), new Array(), new Array()];
+    var data = [
+        [],
+        [],
+        [],
+        []
+    ];
 
     for (var index in this.uiElements) {
         if ((this.uiElements[index] instanceof QuestionnaireItem)) {
@@ -1548,8 +1559,8 @@ ScreenUIElementsAuto.prototype.createUI = function() {
     this.node.className = this.className;
 
     for (var index in this.uiElements) {
-        if (!this.uiElements[index] instanceof UIElement) {
-            TheFragebogen.logger.warn(this.constructor.name + ".createUI():", "Element[" + index + "] has no 'createUI' method");
+        if (!(this.uiElements[index] instanceof UIElement)) {
+            TheFragebogen.logger.warn(this.constructor.name + ".createUI()", "Element[" + index + "] has no 'createUI' method");
             continue;
         }
         var node = this.uiElements[index].createUI();
@@ -1608,7 +1619,7 @@ ScreenUIElementsSequential.prototype.start = function() {
         }
     }
     if (this.currentElementIndex == undefined) {
-      TheFragebogen.logger.error(this.constructor.name + ":", "One UIElementInteractive is at least required.");
+        TheFragebogen.logger.error(this.constructor.name + "", "One UIElementInteractive is at least required.");
     }
 };
 /**
@@ -1674,6 +1685,117 @@ ScreenWaitData.prototype._sendGetDataCallback = function() {
         TheFragebogen.logger.debug(this.constructor.name + "._sendGetDataCallback()", "called");
         this.data = this.getDataCallback();
     }
+};
+
+/**
+Simulates the delayed loading of an image that is selectable (via checkbox).
+During the load process a load animation (another image) is shown.
+
+DEVELOPER:
+* does not support preloading the images
+
+@class UIElementInteractiveDelayedImageSelectable
+@augments UIElement
+@augments UIElementInteractive
+
+@param {string} [className] CSS class
+@param {string} loadAnimationURL URL of the load animation.
+@param {string} imageURL URL of the image.
+@param {string} imageCaption The caption of the image.
+@param {float} loadDelay The delay in ms.
+@param {int} [readyMode=0] 0: immediately, 1: selected, 2: not selected, 3: ready on delayed load, 4: case 1 & 3; 5: case 2 & 3
+*/
+function UIElementInteractiveDelayedImageSelectable(className, loadAnimationURL, imageURL, imageCaption, imageDelay, readyMode) {
+    UIElementInteractive.call(this);
+
+    this.className = className;
+
+    this.loadAnimationURL = loadAnimationURL;
+    this.imageURL = imageURL;
+    this.imageCaption = imageCaption;
+    this.imageDelay = imageDelay;
+
+    this.isSelected = false;
+    this.readyMode = [0, 1, 2, 3, 4, 5].indexOf(readyMode) === -1 ? 0 : readyMode;
+
+    this.checkbox = null;
+    this.isImageLoaded = false;
+}
+UIElementInteractiveDelayedImageSelectable.prototype = Object.create(UIElementInteractive.prototype);
+UIElementInteractiveDelayedImageSelectable.prototype.constructor = UIElementInteractiveDelayedImageSelectable;
+
+UIElementInteractiveDelayedImageSelectable.prototype.createUI = function() {
+    this.node = document.createElement("span");
+    this.node.className = this.className;
+
+    this.checkbox = document.createElement("input");
+    this.checkbox.type = "checkbox";
+    this.node.appendChild(this.checkbox);
+    //Apply value to UI
+    this.checkbox.checked = this.isSelected;
+
+    var image = new Image();
+    image.alt = this.imageCaption;
+    //Load delay for the image
+    if (this.imageDelay > 0) {
+        var imageURL = this.imageURL;
+        image.src = this.loadAnimationURL;
+        setTimeout(
+            function() {
+                image.src = imageURL;
+                this.isImageLoaded = true;
+            }.bind(this),
+            this.imageDelay
+        );
+    } else {
+        image.src = this.imageURL;
+    }
+    this.node.appendChild(image);
+
+    image.addEventListener("click", this._onSelected.bind(this));
+    this.checkbox.addEventListener("changed", this._onSelected.bind(this));
+    this.node.addEventListener("click", this._onSelected.bind(this));
+
+    this.uiCreated = true;
+
+    return this.node;
+};
+
+UIElementInteractiveDelayedImageSelectable.prototype.releaseUI = function() {
+    this.node = null;
+    this.uiCreated = false;
+    this.enabled = false;
+
+    this.checkbox = null;
+    this.isImageLoaded = false;
+};
+
+UIElementInteractiveDelayedImageSelectable.prototype.isReady = function() {
+    switch (this.readyMode) {
+        case 0:
+            return true;
+        case 1:
+            return this.isSelected;
+        case 2:
+            return this.isSelected === false;
+        case 3:
+            return this.isImageLoaded;
+        case 4:
+            return this.isImageLoaded && this.isSelected;
+        case 5:
+            return this.isImageLoaded && this.isSelected === false;
+    }
+};
+
+UIElementInteractiveDelayedImageSelectable.prototype._onSelected = function(event) {
+    if (!this.isUIcreated()) return;
+
+    if ([4, 5].indexOf(this.readyMode) != -1 && !this.isImageLoaded) return;
+
+    this.isSelected = !this.isSelected;
+    this.checkbox.checked = this.isSelected;
+
+    event.stopPropagation();
 };
 
 /**
@@ -1775,7 +1897,7 @@ QuestionnaireItemDate.prototype.setData = function(data) {
 
 /**
 QuestionnaireItems that have a predefined set of potential answers.
- 
+
 @abstract
 @class QuestionnaireItemDefined
 @augments UIElement
@@ -1785,13 +1907,13 @@ QuestionnaireItems that have a predefined set of potential answers.
 @param {string} [className] CSS class
 @param {string} question
 @param {boolean} [required=false]
- 
+
 @param {array} optionList Possible options.
 */
 function QuestionnaireItemDefined(className, question, required, optionList) {
     QuestionnaireItem.call(this, className, question, required);
 
-    if (!optionList instanceof Array) {
+    if (!(optionList instanceof Array)) {
         TheFragebogen.logger.error(this.constructor.name + "()", "optionList needs to be an Array.");
     }
     this.optionList = optionList;
@@ -1946,7 +2068,7 @@ QuestionnaireItemMedia.prototype._onended = function() {
 };
 
 QuestionnaireItemMedia.prototype.setAnswer = function(answer) {
-    this.answer == answer;
+    this.answer = answer;
 };
 
 QuestionnaireItemMedia.prototype.getData = function() {
@@ -2027,7 +2149,7 @@ QuestionnaireItemSVG.prototype._createAnswerNode = function() {
     this.crossImage = this.scaleImage.getElementById("cross");
     //Problem identified here by the tests while using Safari 7.0.6 --- this.crossImage === null
     if (this.crossImage === null) {
-        node.innerHTML = '"QuestionnaireItemSVG" feature not available in this browser or SVG is not compatible.'
+        node.innerHTML = '"QuestionnaireItemSVG" feature not available in this browser or SVG is not compatible.';
         this.answer = "unavailable"; //sets answer, so the item will be ready even if it was required.
         return node;
     }
@@ -2427,18 +2549,17 @@ function QuestionnaireItemWaitWebsocket(className, url, messageSend, messageRece
     this.messageReceive = messageReceive;
 
     if (this.messageSend === undefined && this.messageReceive === undefined) {
-        TheFragebogen.logger.error("QuestionnaireItemWaitWebsocket():", "messageSend and messageReceive are undefined; this component will not do anything.");
+        TheFragebogen.logger.error("QuestionnaireItemWaitWebsocket()", "messageSend and messageReceive are undefined; this component will not do anything.");
     }
 
     this.reconnectAttempts = !isNaN(reconnectAttempts) ? reconnectAttempts : -1;
     this.timeout = !isNaN(timeout) ? Math.abs(timeout) * 1000 : 0;
-    this.timeoutHandle;
 
     this.node = null;
     this.websocketConnection = null;
     this.connectionFailures = 0;
 
-    TheFragebogen.logger.warn("QuestionnaireItemWaitWebsocket():", "Set: url as " + this.url + ", messageSend as" + this.messageSend + ", messageReceive as " + this.messageReceive + "and timeout as " + this.timeout);
+    TheFragebogen.logger.warn("QuestionnaireItemWaitWebsocket()", "Set: url as " + this.url + ", messageSend as" + this.messageSend + ", messageReceive as " + this.messageReceive + "and timeout as " + this.timeout);
 }
 QuestionnaireItemWaitWebsocket.prototype = Object.create(QuestionnaireItem.prototype);
 QuestionnaireItemWaitWebsocket.prototype.constructor = QuestionnaireItemWaitWebsocket;
@@ -2536,7 +2657,7 @@ QuestionnaireItemWaitWebsocket.prototype.releaseUI = function() {
     if (this.websocketConnection !== null && (this.websocketConnection.readyState == WebSocket.CONNECTING || this.websocketConnection.readyState == WebSocket.OPEN)) {
         this.websocketConnection.onclose = function() {
             TheFragebogen.logger.info(this.constructor.name + ".connection.onclose()", "Connection closed.");
-        }
+        };
         this.websocketConnection.close();
     }
     this.websocketConnection = null;
@@ -2579,7 +2700,7 @@ QuestionnaireItemSystemWait.prototype._waitTimeCallback = function() {
 QuestionnaireItemSystemWait.prototype.releaseUI = function() {
     if (this.timeoutHandle !== null) {
         clearTimeout(this.timeoutHandle);
-        this.timeoutHandle === null;
+        this.timeoutHandle = null;
     }
 };
 
@@ -2629,7 +2750,7 @@ function QuestionnaireItemWrite(className, question, required, backgroundImg, wi
     QuestionnaireItem.call(this, className, question, required);
 
     this.className = className;
-    this.backgroundImg = typeof(backgroundImg) !== "undefined" ? backgroundImg : "";
+    this.backgroundImg = backgroundImg !== undefined ? backgroundImg : "";
     this.height = !isNaN(height) && height > 0 ? height : 240;
     this.width = !isNaN(width) && width > 0 ? width : 320;
 
@@ -3121,7 +3242,7 @@ QuestionnaireItemDefinedMulti.prototype.setAnswer = function(answer) {
         this.answer = [];
 
         if (answer.length > this.optionList.length) {
-            TheFragebogen.logger.warn(this.constructor.name + ".setAnswer()", "use only an array.")
+            TheFragebogen.logger.warn(this.constructor.name + ".setAnswer()", "use only an array.");
             return false;
         }
 
@@ -3823,9 +3944,7 @@ QuestionnaireItemSVGQuality7pt.prototype._setupSVG = function() {
     this.scaleImage.setAttribute("viewBox", "0 2 136.76 21.39");
     this.scaleImage.innerHTML = '<?xml version="1.0" encoding="utf-8" standalone="no"?><svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.1" id="svg5198" height="21.394005" width="136.76094"><defs id="defs5200" /><metadata id="metadata5203"><rdf:RDF><cc:Work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title /></cc:Work></rdf:RDF></metadata><g style="display:inline" transform="translate(-12.104855,-1030.0402)" id="layer1"><rect y="1036.3621" x="30" height="1" width="103" id="rect5206" style="fill:#000000;fill-opacity:1" /><rect y="1037.2622" x="25" height="2.0999999" width="1.000026" id="rect5763" style="opacity:0;fill:#000000;fill-opacity:1" /><rect y="1037.2622" x="29.000103" height="2.0999999" width="1.000026" id="rect5765" style="opacity:0;fill:#000000;fill-opacity:1" /><rect y="1037.2622" x="33.000206" height="2.0999999" width="1.000026" id="rect5765-9" style="fill:#000000;fill-opacity:1" /><rect y="1037.2622" x="36.999847" height="2.0999999" width="1" id="rect5765-9-4" style="fill:#000000;fill-opacity:1" /><rect y="1037.3622" x="40.799999" height="5" width="1.2" id="rect5822" style="fill:#000000;fill-opacity:1" /><rect y="1037.2622" x="45" height="2.0999999" width="1.000026" id="rect5763-5" style="fill:#000000;fill-opacity:1" /><rect y="1037.2622" x="49.000103" height="2.0999999" width="1.000026" id="rect5765-7" style="fill:#000000;fill-opacity:1" /><rect y="1037.2622" x="53.000206" height="2.0999999" width="1.000026" id="rect5765-9-9" style="fill:#000000;fill-opacity:1" /><rect y="1037.2622" x="56.999847" height="2.0999999" width="1" id="rect5765-9-4-2" style="fill:#000000;fill-opacity:1" /><rect y="1037.3622" x="60.799999" height="5" width="1.2" id="rect5822-6" style="fill:#000000;fill-opacity:1" /><rect y="1037.2622" x="65" height="2.0999999" width="1.000026" id="rect5763-5-2" style="fill:#000000;fill-opacity:1" /><rect y="1037.2622" x="69.000107" height="2.0999999" width="1.000026" id="rect5765-7-5" style="fill:#000000;fill-opacity:1" /><rect y="1037.2622" x="73.000206" height="2.0999999" width="1.000026" id="rect5765-9-9-0" style="fill:#000000;fill-opacity:1" /><rect y="1037.2622" x="76.999847" height="2.0999999" width="1" id="rect5765-9-4-2-3" style="fill:#000000;fill-opacity:1" /><rect y="1037.3622" x="80.800003" height="5" width="1.2" id="rect5822-6-5" style="fill:#000000;fill-opacity:1" /><rect y="1037.2622" x="85.000008" height="2.0999999" width="1.000026" id="rect5763-5-2-9" style="fill:#000000;fill-opacity:1" /><rect y="1037.2622" x="89.000114" height="2.0999999" width="1.000026" id="rect5765-7-5-9" style="fill:#000000;fill-opacity:1" /><rect y="1037.2622" x="93.000214" height="2.0999999" width="1.000026" id="rect5765-9-9-0-0" style="fill:#000000;fill-opacity:1" /><rect y="1037.2622" x="96.999855" height="2.0999999" width="1" id="rect5765-9-4-2-3-5" style="fill:#000000;fill-opacity:1" /><rect y="1037.3622" x="100.8" height="5" width="1.2" id="rect5822-6-5-4" style="fill:#000000;fill-opacity:1" /><rect y="1037.2622" x="105.00002" height="2.0999999" width="1.000026" id="rect5763-5-2-9-6" style="fill:#000000;fill-opacity:1" /><rect y="1037.2622" x="109.00013" height="2.0999999" width="1.000026" id="rect5765-7-5-9-9" style="fill:#000000;fill-opacity:1" /><rect y="1037.2622" x="113.00023" height="2.0999999" width="1.000026" id="rect5765-9-9-0-0-8" style="fill:#000000;fill-opacity:1" /><rect y="1037.2622" x="116.99986" height="2.0999999" width="1" id="rect5765-9-4-2-3-5-0" style="fill:#000000;fill-opacity:1" /><rect y="1037.3622" x="120.8" height="5" width="1.2" id="rect5822-6-5-4-7" style="fill:#000000;fill-opacity:1" /><rect y="1037.2622" x="125.00002" height="2.0999999" width="1.000026" id="rect5763-5-2-9-6-9" style="fill:#000000;fill-opacity:1" /><rect y="1037.2622" x="129.00012" height="2.0999999" width="1.000026" id="rect5765-7-5-9-9-9" style="fill:#000000;fill-opacity:1" /><rect y="1037.2622" x="133.00023" height="2.0999999" width="1.000026" id="rect5765-9-9-0-0-8-0" style="opacity:0;fill:#000000;fill-opacity:1" /><rect y="1037.2622" x="136.99986" height="2.0999999" width="1" id="rect5765-9-4-2-3-5-0-5" style="opacity:0;fill:#000000;fill-opacity:1" /><rect y="1036.6622" x="21.204855" height="0.40000001" width="8.8000002" id="rect6036" style="fill:#000000;fill-opacity:1" /><rect y="1036.9623" x="21.206226" height="5.4000001" width="0.3491767" id="rect6036-5" style="fill:#000000;fill-opacity:1" /><rect transform="scale(-1,1)" y="1036.6621" x="-141.80486" height="0.40000001" width="8.8000002" id="rect6036-2" style="fill:#000000;fill-opacity:1" /><rect transform="scale(-1,1)" y="1036.9622" x="-141.80486" height="5.4000001" width="0.40000001" id="rect6036-5-2" style="fill:#000000;fill-opacity:1" /><text id="label10" y="1044.4059" x="21.174191" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2px;line-height:100%;font-family:Sans;-inkscape-font-specification:Sans;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none" xml:space="preserve"><tspan y="1044.4059" x="21.174191" id="tspan3851">extrem</tspan><tspan id="tspan3853" y="1046.4059" x="21.174191">schlecht</tspan></text><text id="label20" y="1044.5059" x="41.174191" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2px;line-height:100%;font-family:Sans;-inkscape-font-specification:Sans;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none" xml:space="preserve"><tspan id="tspan3853-8" y="1044.5059" x="41.174191">schlecht</tspan></text><text id="label30" y="1044.6182" x="61.267941" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2px;line-height:100%;font-family:Sans;-inkscape-font-specification:Sans;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none" xml:space="preserve"><tspan id="tspan3853-8-1" y="1044.6182" x="61.267941">dürftig</tspan></text><text id="label40" y="1044.6058" x="81.267944" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2px;line-height:100%;font-family:Sans;-inkscape-font-specification:Sans;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none" xml:space="preserve"><tspan x="81.267944" id="tspan3853-8-1-6" y="1044.6058">ordentlich</tspan></text><text id="label50" y="1044.4182" x="101.4683" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2px;line-height:100%;font-family:Sans;-inkscape-font-specification:Sans;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none" xml:space="preserve"><tspan id="tspan3853-8-1-6-0" y="1044.4182" x="101.4683">gut</tspan></text><text id="label60" y="1044.5182" x="121.25037" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2px;line-height:100%;font-family:Sans;-inkscape-font-specification:Sans;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none" xml:space="preserve"><tspan id="tspan3853-8-1-6-04" y="1044.5182" x="121.25037">ausgezeichnet</tspan></text><text id="label70" y="1044.5059" x="141.63435" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2px;line-height:100%;font-family:Sans;-inkscape-font-specification:Sans;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;display:inline;fill:#000000;fill-opacity:1;stroke:none" xml:space="preserve"><tspan id="tspan3853-8-1-6-04-3" y="1044.5059" x="141.63435">ideal</tspan></text><text id="text4253" y="1060.8917" x="39.858795" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;line-height:125%;font-family:Arial;-inkscape-font-specification:"Arial, Normal";text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" xml:space="preserve"><tspan y="1060.8917" x="39.858795" id="tspan4255" /></text></g><g style="display:inline" transform="translate(7.8951471,6.3219508)" id="layer3"><ellipse id="12" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="5.4548545" cy="1.5720948" rx="1" ry="2.5" /><ellipse id="13" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="7.5048547" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="14" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="9.5048542" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="15" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="11.504855" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="16" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="13.504855" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="17" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="15.504855" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="18" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="17.504854" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="19" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="19.504854" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="20" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="21.404854" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="22" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="25.454855" cy="1.5720948" rx="1" ry="2.5" /><ellipse id="23" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="27.504854" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="24" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="29.504854" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="25" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="31.504854" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="26" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="33.504852" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="27" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="35.504856" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="28" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="37.504856" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="29" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="39.504856" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="30" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="41.404854" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="21" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="23.354855" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="32" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="45.454853" cy="1.5720948" rx="1" ry="2.5" /><ellipse id="33" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="47.504852" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="34" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="49.504852" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="35" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="51.504852" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="36" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="53.504852" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="37" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="55.504856" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="38" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="57.504856" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="39" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="59.504856" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="40" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="61.404854" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="31" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="43.354855" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="42" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="65.454857" cy="1.5720948" rx="1" ry="2.5" /><ellipse id="43" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="67.504852" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="44" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="69.504852" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="45" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="71.504852" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="46" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="73.504852" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="47" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="75.504852" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="48" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="77.504852" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="49" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="79.504852" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="50" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="81.404854" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="41" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="63.354855" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="52" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="85.454857" cy="1.5720948" rx="1" ry="2.5" /><ellipse id="53" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="87.504852" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="54" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="89.504852" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="55" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="91.504852" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="56" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="93.504852" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="57" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="95.504852" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="58" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="97.504852" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="59" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="99.504852" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="60" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="101.40485" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="51" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="83.354858" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="62" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="105.50486" cy="1.5720948" rx="1" ry="2.5" /><ellipse id="63" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="107.55486" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="64" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="109.55486" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="65" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="111.55486" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="66" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="113.55486" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="67" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="115.55486" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="68" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="117.55486" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="69" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="119.55486" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="70" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="121.55486" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="61" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="103.40485" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="11" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="3.4048545" cy="1.5720948" rx="0.94999999" ry="2.5" /><ellipse id="10" style="opacity:0;fill:#000000;fill-opacity:0.45871558" cx="1.4048545" cy="1.5720948" rx="0.94999999" ry="2.5" /></g><g transform="translate(7.0000016,5.4565456)" style="display:inline" id="layer4"><path id="cross" d="M 3.666497,-0.09404561 C 0.69774682,2.8434544 0.69774682,2.8434544 0.69774682,2.8434544 L 2.2289971,1.3747044 0.72899682,-0.15654561 3.697747,2.8434544" style="fill:none;stroke:#000000;stroke-width:0.60000002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" /></g></svg>';
 
-    if (!(this.labels instanceof Array && this.labels.length === 7)) {
-        TheFragebogen.logger.warn(this.constructor.name + "._setupSVG()", "Exactly 7 labels are required as array. Got: " + this.labels);
-    } else {
+    if (this.labels instanceof Array && this.labels.length === 7) {
         TheFragebogen.logger.debug(this.constructor.name + "._setupSVG()", "Using custom labels: " + this.labels);
 
         this.scaleImage.getElementById("label10").textContent = this.labels[0];
@@ -3835,6 +3954,8 @@ QuestionnaireItemSVGQuality7pt.prototype._setupSVG = function() {
         this.scaleImage.getElementById("label50").textContent = this.labels[4];
         this.scaleImage.getElementById("label60").textContent = this.labels[5];
         this.scaleImage.getElementById("label70").textContent = this.labels[6];
+    } else {
+        TheFragebogen.logger.info(this.constructor.name + "._setupSVG()", "Using default scale labels.");
     }
 };
 QuestionnaireItemSVGQuality7pt.prototype._getAnswerElements = function() {

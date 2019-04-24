@@ -5,6 +5,7 @@
         <meta charset="utf-8">
         <title></title>
         <link rel="stylesheet" type="text/css" href="example.css">
+
         <style>
         .undefinedRequired {
             outline: none;
@@ -40,29 +41,44 @@
         }
 
         </style>
+
         <script src="../thefragebogen.js"></script>
+
         <script>
         //This array stores all screens that will be shown.
         var screens = [];
 
         //The welcome screen of this questionnaire with some text and a standard question.
         var screen1 = new ScreenUIElements(
-            new UIElementHTML(undefined, "Welcome to the demo version of TheFragebogen!"),
-            new UIElementHTML(undefined, "This demo shows how another webpage could be embedded into a questionnaire."),
-            new UIElementHTML(undefined, "On the following screen, the webpage of TheFragebogen (<i>www.TheFragebogen.de<\/i>) is opened."),
-            new UIElementHTML(undefined, "The questionnaire is configured to close the used iFrame when the URL is <i>first<\/i> changed (i.e., you clicked on a link)."),
-            new UIElementHTML(undefined, "When you are ready, please press 'Next'.")
+            new UIElementHTML(undefined, "Welcome to the demo version of TheFragebogen!<br><br>This demo gives you an overview of the available features.<br>When you are ready, please press 'Next'."),
+            new QuestionnaireItemDefinedOne(undefined, "Are you ready?", true, ["Yes"])
         );
         screens.push(screen1);
 
-        //This screen another webpage using an iframe.
-        var screen2 = new ScreenIFrame(undefined, "http://www.TheFragebogen.de", 1);
-        screens.push(screen2);
-
+        //This screen shows some questions.
         var screen2 = new ScreenUIElements(
-            new UIElementHTML(undefined, "This is the questionnaire again.")
+            new UIElementHTML(undefined, "Just some basic questions.<br>The 2nd must be answered."),
+            new QuestionnaireItemDefinedOne(undefined, "QuestionnaireItemDefinedOne: Question with a defined set of options, where only one option can be selected.", false, ["Option 1", "Option 2", "Option 3"]),
+            new QuestionnaireItemDefinedMulti(undefined, "QuestionnaireItemDefinedMulti: Question with a defined set of options, where multiple options can be selected.", true, ["Option 1", "Option 2", "Option 3"])
         );
         screens.push(screen2);
+
+        //This screen that just waits for a defined time (in seconds).
+        var screen3 = new ScreenWait(undefined, 3, 'Just wait 3 seconds.');
+        screens.push(screen3);
+
+        //This screen "shows" questions that are answered automatically (and are not visible to the user).
+        var screen4 = new ScreenUIElements(
+            new UIElementHTML(undefined, "This screen stores data like the current data, the duration the screen was shown and the URL."),
+            new QuestionnaireItemSystemURL(),
+            new QuestionnaireItemSystemScreenDateTime(),
+            new QuestionnaireItemSystemScreenDuration(),
+            new QuestionnaireItemSystemConst("Default text", "Some stuff")
+        );
+        screens.push(screen4);
+
+        //This screen shows a preview of the collected data.
+        screens.push(new ScreenDataPreview("screenPreview"));
 
         //This screen triggers the download all collected data (CSV).
         screens.push(new ScreenWaitDataDownload(undefined, "The End<br>All data should now be downloaded."));
@@ -71,8 +87,11 @@
         var screenController = new ScreenController(screens);
 
         </script>
-        <script type="text/javascript">
-        document.oncontextmenu = new Function("return false;") //Disable context menu (right click)
+
+        <script>
+        document.oncontextmenu = function() {
+            return false;
+        }; //Disable context menu (right click)
 
         //Having the start()-function in an extra script-tag makes sure that it will be executed even if there are errors in the script-tag configuring TheFragebogen.
         function start() {
