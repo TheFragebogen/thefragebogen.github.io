@@ -12,6 +12,7 @@
             </a>
             <div class="trigger">
                 <a class="page-link {% if page.url == "/" %}currentPage{% endif %}" href="/">/home</a>
+                <a class="page-link {% if page.url contains "/demo" %}currentPage{% endif %}" href="/demo">/demo</a>
                 <a class="page-link {% if page.url contains "/gettingstarted" %}currentPage{% endif %}" href="/gettingstarted">/getting started</a>
                 <a class="page-link {% if page.url contains "/faq" %}currentPage{% endif %}" href="/faq">/faq</a>
                 <a class="page-link" href="https://github.com/TheFragebogen/TheFragebogen/releases">/releases</a>
