@@ -120,15 +120,6 @@ ul, ol {
   padding-left: 1em;
 }
 
-pre, code {
-  border: 1px solid #d0d0d0;
-  background-color: #f5f5f5;
-  padding: 0.1em 0.3em;
-  border-radius: 3px;
-  white-space: pre-wrap;       /* CSS 3 */
-  word-wrap: break-word;       /* Internet Explorer 5.5+ */
-}
-
 @media screen and (max-width: 600px) {
   .wrap {
       padding: 0 1em;
