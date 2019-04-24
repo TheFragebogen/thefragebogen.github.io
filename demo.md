@@ -45,3 +45,12 @@ Multimedia features
 * __Simulated load delay__: A questionnaire that presents 4 images with different load delay.  
  __[Live demo](/thefragebogen/examples/example_delayed_loading.html)__  
  Code: [TheFragebogen/examples/example_delayed_loading.html](https://github.com/TheFragebogen/TheFragebogen/blob/master/examples/example_delayed_loading.html)  
+
+Feasibility studies
+---
+
+* __TheAudiometer__: A _proof-of-concept_ implementation of an audiometer (i.e., estimate hearing threshold).
+  For more information see the [README](https://github.com/TheFragebogen/TheFragebogen/blob/master/examples_feasibility/TheAudiometer/README.md).  
+  __NOTE:__ TheAudiometer was implemented using _Firefox 60.6.1esr_. It may not work on another version or another web browser.  
+  __[Live demo](/thefragebogen/examples_feasibility/TheAudiometer/TheAudiometer.html)__  
+  Code: [TheFragebogen/examples_feasibility/TheAudiometer.html](https://github.com/TheFragebogen/TheFragebogen/blob/master/examples_feasibility/TheAudiometer/TheAudiometer.html)  
