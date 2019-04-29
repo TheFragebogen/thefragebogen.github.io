@@ -31,3 +31,11 @@ For an introduction, see:
 * the [getting started section](gettingstarted/),
 * the [README](https://github.com/TheFragebogen/TheFragebogen/blob/master/README.md), and
 * the [source Code](https://github.com/TheFragebogen/TheFragebogen/).
+
+Use cases for scientific research
+---
+TheFragebogen evolved during conducting scientific research.
+The paper _TheFragebogen: A Web Browser-based Questionnaire Framework for Scientific Research_ (2019, QoMEX, Berlin) describes detailed features and use cases.
+
+[![2019-QoMEX](static/paper/2019-guse-et-al-qomex.png)](static/paper/2019-guse-et-al-qomex.pdf)
+
