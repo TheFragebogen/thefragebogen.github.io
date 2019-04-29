@@ -53,4 +53,5 @@ Feasibility studies
   For more information see the [README](https://github.com/TheFragebogen/TheFragebogen/blob/master/examples_feasibility/TheAudiometer/README.md).  
   __NOTE:__ TheAudiometer was implemented using _Firefox 60.6.1esr_. It may not work on another version or another web browser.  
   __[Live demo](/thefragebogen/examples_feasibility/TheAudiometer/TheAudiometer.html)__  
+  __[Video of live demo](/thefragebogen/examples_feasibility/TheAudiometer-demo.webm)__ (requires stereo headphones)      
   Code: [TheFragebogen/examples_feasibility/TheAudiometer.html](https://github.com/TheFragebogen/TheFragebogen/blob/master/examples_feasibility/TheAudiometer/TheAudiometer.html)  
