@@ -79,9 +79,12 @@ a:visited {
   color: #727272;
 }
 
-.site-nav .currentPage,
 .site-nav a:hover
  {
+    text-decoration: underline;
+}
+
+.site-nav .currentPage {
     font-weight: bold;
 }
 
