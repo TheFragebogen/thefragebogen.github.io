@@ -109,14 +109,26 @@ h1 {
   font-size: 2em;
 }
 
+h1, a {
+  color: black;
+}
+
 h2 {
   border-bottom: 0.01em dotted black;
   font-size: 1.5em;
   display: inline-block;
 }
 
+h2, a {
+  color: black;
+}
+
 h3 {
   font-size: 1em;
+}
+
+h3, a {
+  color: black;
 }
 
 ul, ol {

@@ -9,6 +9,9 @@ safe: true
 
 # Build settings
 markdown: kramdown
+kramdown:
+  auto_id_stripping: true
+  
 permalink: pretty
 highlighter: rouge
 exclude: [raw]

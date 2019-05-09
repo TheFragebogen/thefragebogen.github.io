@@ -6,10 +6,10 @@ title: Getting started
 Getting started
 ===
 
-The concept
+[The concept](#the-concept)
 ---
 
-### Structure
+### [Structure](#structure)
 TheFragebogen follows the _paper metaphor_, i.e., a paper-based questionnaire is actually a sequence of paper sheets, which each consists of one or more items.
 An item consists, in fact, of a question and a scale.
 Sheets are represented in TheFragebogen by so-called `Screens` and items by so-called `QuestionnaireItems`.
@@ -28,7 +28,7 @@ This allows to implement a questionnaire without requiring a web server or any o
 Nevertheless, all functionality that can be used to implement web pages can be used.
 For more information on available functionalities see [Mozilla's Developer Network](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5).
 
-Code
+[Code](#code)
 ---
 This is a minimal implementation.
 
@@ -58,7 +58,7 @@ function start() {
 }
 ```
 
-The data export
+[The data export](#the-data-export)
 ---
 
 During execution a questionnaire by a web browser the collected data is stored only _within_ the web browser.  
@@ -82,7 +82,7 @@ For each row (usually a row represents _one_ `QuestionnaireItem`):
 * Column _4_ contains the potential answers (might be `undefined`).
 * Column _5_ contains the answer(s) (might contain an array; depends on the answers to be exported).
 
-Next steps
+[Next steps](#next-steps)
 ---
 1. Take a look...
     1. ... at the [demos](/demo).

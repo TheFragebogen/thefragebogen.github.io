@@ -9,7 +9,7 @@ Demo
 TheFragebogen provides a large number of features.
 The following demos show use cases for these features.  
 
-Basic features
+[Basic features](#basic-features)
 ---
 
 * __UI elements__: An overview of the implemented items that can be used in questionnaires.  
@@ -24,7 +24,7 @@ Basic features
   __[Live demo](/thefragebogen/examples/example_print.html)__  
    Code: [TheFragebogen/examples/example_print.html](https://github.com/TheFragebogen/TheFragebogen/blob/master/examples/example_print.html)  
 
-Advanced features
+[Advanced features](#advanced-features)
 ---
 
 * __Interactivity with Websockets__: A questionnaire that shows how to communicate with other systems via Websockets.  
@@ -35,7 +35,7 @@ Advanced features
   __[Live demo](/thefragebogen/examples/example_dynamic.html)__  
    Code: [TheFragebogen/examples/example_dynamic.html](https://github.com/TheFragebogen/TheFragebogen/blob/master/examples/example_dynamic.html)  
 
-Multimedia features
+[Multimedia features](#multimedia-features)
 ---
 
 * __Media__: A questionnaire that presents audio as well as video via HTML5 (No data export).  
@@ -46,7 +46,7 @@ Multimedia features
  __[Live demo](/thefragebogen/examples/example_delayed_loading.html)__  
  Code: [TheFragebogen/examples/example_delayed_loading.html](https://github.com/TheFragebogen/TheFragebogen/blob/master/examples/example_delayed_loading.html)  
 
-Feasibility studies
+[Feasibility studies](#feasibility-studies)
 ---
 
 * __TheAudiometer__: A _proof-of-concept_ implementation of an audiometer (i.e., estimate hearing threshold).
