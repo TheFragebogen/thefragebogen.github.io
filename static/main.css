@@ -56,13 +56,15 @@ a:visited {
   margin: 0;
 }
 
-.site-title, .site-title:hover, .site-title:visited {
+.site-title {
   display: block;
   color: #333;
-  font-size: 2em;
   float: left;
   position: relative;
   z-index: 1;
+
+  line-height: 4.5em;
+  font-weight: bold;
 }
 
 .site-nav {
@@ -80,12 +82,12 @@ a:visited {
 }
 
 .site-nav a:hover
- {
-    text-decoration: underline;
+{
+  text-decoration: underline;
 }
 
 .site-nav .currentPage {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 /* Page Content styles */
