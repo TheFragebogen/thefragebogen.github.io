@@ -111,7 +111,7 @@ h1 {
   font-size: 2em;
 }
 
-h1, a {
+h1 > a {
   color: black;
 }
 
@@ -121,7 +121,7 @@ h2 {
   display: inline-block;
 }
 
-h2, a {
+h2 > a {
   color: black;
 }
 
@@ -129,7 +129,7 @@ h3 {
   font-size: 1em;
 }
 
-h3, a {
+h3 > a {
   color: black;
 }
 
