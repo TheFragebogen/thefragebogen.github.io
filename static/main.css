@@ -137,6 +137,12 @@ ul, ol {
   padding-left: 1em;
 }
 
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 0.3em;
+}
+
 @media screen and (max-width: 750px) {
   .wrap {
       padding: 0 1em;

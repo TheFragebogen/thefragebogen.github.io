@@ -6,7 +6,7 @@ title: About
 About
 ===
 
-Software design and implementation of TheFragebogen was started by Henrique R. Orefice and Dennis Guse.
+Software design and implementation of TheFragebogen was started by Henrique R. Orefice and [Dennis Guse](https://dennisguse.de).
 
 Additional contributors before open-source release
 ---

@@ -21,7 +21,7 @@ The lifecycle of a questionnaire is handled by the `ScreenController`, which org
 
 TheFragebogen is completely implemented using [object-oriented programming (OOP)](https://en.wikipedia.org/wiki/Object-oriented_programming).
 
-### Technical details
+### [Technical details](#technical-details)
 TheFragebogen enables to implement questionnaires as [_single-page applications_](https://en.wikipedia.org/wiki/Single-page_application).
 This is a specific implementation approach of a web page that modifies it's content using JavaScript.
 This allows to implement a questionnaire without requiring a web server or any other network infrastructure, as all necessary data can be included in this application.
@@ -40,7 +40,7 @@ var screens = [];
 var htmlWelcome = new UIElementHTML(undefined, "Welcome to the TheFragebogen!<br/>Please press 'Next'.");
 
 //now we add a radio box with just one option 'yes'
-var readyRadioBox = new QuestionnaireItemDefinedOne(undefined, "Are you ready?", true, ["Yes"])
+var readyRadioBox = new QuestionnaireItemDefinedOne(undefined, "Are you ready?", true, ["Yes"]);
 
 //to display the welcome message and the radio box
 //we add both to a screen UI-Element
@@ -82,14 +82,18 @@ For each row (usually a row represents _one_ `QuestionnaireItem`):
 * Column _4_ contains the potential answers (might be `undefined`).
 * Column _5_ contains the answer(s) (might contain an array; depends on the answers to be exported).
 
+__NOTE:__ TheFragebogen also supports tracking changes of the answer of `QuestionnaireItems`.
+In this case, _column 5_ contains an `array<array<timestamp, answer>>`.
+
 [Next steps](#next-steps)
 ---
 1. Take a look...
     1. ... at the [demos](/demo).
     2. ... at [TheFragebogen's README](https://github.com/thefragebogen/thefragebogen/README).
+    3. ... at the JSDoc documenation.
 2. Setup your development tools
-    1. Choose your [web editor](https://en.wikipedia.org/wiki/Comparison_of_HTML_editors).
-    2. Get familiar with your web browser development tools (i.e., [Firefox Developer Console](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_are_browser_developer_tools) or [Chrome Devtools](https://developers.google.com/web/tools/chrome-devtools/)).
+    1. Choose your [HTML editor](https://en.wikipedia.org/wiki/Comparison_of_HTML_editors).
+    2. Get familiar with web browser development tools (i.e., [Firefox Developer Console](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_are_browser_developer_tools) or [Chrome Devtools](https://developers.google.com/web/tools/chrome-devtools/)).
 3. Start by modifying the [developer template](https://github.com/TheFragebogen/TheFragebogen/blob/master/examples/developer_template.html).
 4. When done your implementation test it on different web browsers.
 5. Think about using version-control software (e.g., [GIT](https://git-scm.com/)).

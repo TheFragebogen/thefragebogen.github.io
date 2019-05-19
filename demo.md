@@ -1,17 +1,15 @@
 ---
 layout: default
-title: Demo
+title: Demos
 ---
 
-Demo
+Demos
 ===
-
 TheFragebogen provides a large number of features.
 The following demos show use cases for these features.  
 
 [Basic features](#basic-features)
 ---
-
 * __UI elements__: An overview of the implemented items that can be used in questionnaires.  
   __[Live demo](/thefragebogen/examples/example_uielements.html)__  
   Code: [TheFragebogen/examples/example_uielements.html](https://github.com/TheFragebogen/TheFragebogen/blob/master/examples/example_uielements.html)  
@@ -26,9 +24,8 @@ The following demos show use cases for these features.
 
 [Advanced features](#advanced-features)
 ---
-
-* __Interactivity with Websockets__: A questionnaire that shows how to communicate with other systems via Websockets.  
-  __Live demo__ not available as a Websocket Server must running.  
+* __Interactivity with WebSockets__: A questionnaire that shows how to communicate with other systems via WebSockets.  
+  __Live demo__ not available as a WebSocket Server must running.  
    Code: [TheFragebogen/examples/example_websocket.html](https://github.com/TheFragebogen/TheFragebogen/blob/master/examples/example_websockets.html)  
 
 * __Dynamic questionnaire__: A questionnaire that is generated while executing it.  
@@ -37,7 +34,6 @@ The following demos show use cases for these features.
 
 [Multimedia features](#multimedia-features)
 ---
-
 * __Media__: A questionnaire that presents audio as well as video via HTML5 (No data export).  
   __[Live demo](/thefragebogen/examples/example_media.html)__  
    Code: [TheFragebogen/examples/example_media.html](https://github.com/TheFragebogen/TheFragebogen/blob/master/examples/example_media.html)  
@@ -48,7 +44,6 @@ The following demos show use cases for these features.
 
 [Feasibility studies](#feasibility-studies)
 ---
-
 * __TheAudiometer__: A _proof-of-concept_ implementation of an audiometer (i.e., estimate hearing threshold).
   For more information see the [README](https://github.com/TheFragebogen/TheFragebogen/blob/master/examples_feasibility/TheAudiometer/README.md).  
   __NOTE:__ TheAudiometer was implemented using _Firefox 60.6.1esr_. It may not work on another version or another web browser.  
