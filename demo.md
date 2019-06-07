@@ -26,7 +26,8 @@ The following demos show use cases for these features.
 ---
 * __Interactivity with WebSockets__: A questionnaire that shows how to communicate with other systems via WebSockets.  
   __Live demo__ not available as a WebSocket Server must running.  
-   Code: [TheFragebogen/examples/example_websocket.html](https://github.com/TheFragebogen/TheFragebogen/blob/master/examples/example_websockets.html)  
+   Code (one client): [TheFragebogen/examples/example_websocket.html](https://github.com/TheFragebogen/TheFragebogen/blob/master/examples/example_websockets.html)  
+   Code (two clients): [TheFragebogen/examples/example_websocket_coordination_1st_instance.html](https://github.com/TheFragebogen/TheFragebogen/blob/master/examples/example_websocket_coordination_1st_instance.html) and [TheFragebogen/examples/example_websocket_coordination_2st_instance.html](https://github.com/TheFragebogen/TheFragebogen/blob/master/examples/example_websocket_coordination_2st_instance.html)  
 
 * __Dynamic questionnaire__: A questionnaire that is generated while executing it.  
   __[Live demo](/thefragebogen/examples/example_dynamic.html)__  
