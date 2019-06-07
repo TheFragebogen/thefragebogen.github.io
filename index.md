@@ -34,4 +34,11 @@ Use cases for scientific research
 TheFragebogen evolved during conducting scientific research.
 The paper _TheFragebogen: A Web Browser-based Questionnaire Framework for Scientific Research_ (2019, QoMEX, Berlin) describes detailed features and use cases.
 
-[![2019-QoMEX](static/paper/2019-guse-et-al-qomex.png)](static/paper/2019-guse-et-al-qomex.pdf)
+<p>
+  <a href="static/paper/2019-guse-et-al-qomex.pdf">
+  <img src="static/paper/2019-guse-et-al-qomex.png" alt="Paper: 2019-QoMEX" style="height: 20em; border: 1px solid gray;">
+  </a>
+  <a href="static/paper/2019-guse-et-al-qomex-poster.pdf">
+    <img src="static/paper/2019-guse-et-al-qomex-poster.png" alt="Poster: 2019-QoMEX" style="height: 20em; border: 1px solid gray;">
+  </a>
+</p>
